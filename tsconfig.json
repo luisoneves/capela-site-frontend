@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -18,8 +22,12 @@
         "name": "next"
       }
     ],
+    // --- MUDANÇA CRUCIAL AQUI ---
+    "baseUrl": ".", // Diz que o ponto de partida para os "paths" é a raiz do projeto.
     "paths": {
-      "@/*": ["./*"]
+      "@/*": [
+        "./src/*"
+      ] // Diz que "@/" deve ser resolvido para a pasta "./src/".
     }
   },
   "include": [
@@ -27,8 +35,9 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    ".next/dev/types/**/*.ts",
-    "**/*.mts"
+    ".next/dev/types/**/*.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }

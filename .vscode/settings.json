@@ -1,0 +1,36 @@
+{
+  // ===============================
+  // 🧩  QUALIDADE E PADRONIZAÇÃO (Específico para este Projeto)
+  // ===============================
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  // Diz ao ESLint para validar APENAS os tipos de arquivo que temos neste projeto.
+  "eslint.validate": ["javascript", "typescript"],
+
+  // ===============================
+  // 🧠  CODE SPELL CHECKER (Específico para este Projeto)
+  // ===============================
+  // Define os idiomas apenas para este projeto, sobrescrevendo sua lista global.
+  "cSpell.language": "en,pt-BR",
+  // Adiciona palavras que são específicas deste projeto, sem poluir seu arquivo global.
+  "cSpell.words": [
+    "Strapi",
+    "servicos",
+    "capela",
+    "tailwindcss"
+  ],
+
+  // ===============================
+  // 🎨  RECOMENDAÇÕES PARA A EQUIPE (Opcional)
+  // ===============================
+  // Se outra pessoa entrar no projeto, o VS Code vai sugerir instalar estas extensões.
+  "extensions.recommendations": [
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "bradlc.vscode-tailwindcss",
+    "streetsidesoftware.code-spell-checker",
+    "eamodio.gitlens"
+  ]
+}
