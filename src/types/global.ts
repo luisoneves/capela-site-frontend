@@ -2,8 +2,8 @@
 export interface GlobalData {
   id: number;
   nomeDoSite: string;
-  descricaoSite: string | null; // Permite que o valor seja string ou nulo
-  logo: any; // Mantemos 'any' por enquanto para simplificar o tipo de mídia
+  descricaoSite: string | null;
+  logo: any; // Mantemos 'any' por enquanto para simplificar
   telefone: string | null;
   whatsapp: string | null;
   emailContato: string | null;
@@ -15,12 +15,13 @@ export interface GlobalData {
     id: number;
     label: string;
     url: string | null;
-  }[]; // O '[]' no final significa que é um array desses objetos
+  }[];
 
   // As redes sociais também são um array de objetos
+  // CORREÇÃO: Usamos 'label' aqui para bater com o que foi cadastrado no Strapi
   redesSociais: {
     id: number;
-    nome: string;
-    url: string | null; // Corrigimos de 'link' para 'url' para bater com o que você criou
+    label: string; // ANTES ESTAVA 'nome', AGORA ESTÁ 'label'
+    url: string | null;
   }[];
 }
