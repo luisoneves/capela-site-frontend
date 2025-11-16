@@ -2,7 +2,7 @@ import { GlobalData } from "@/types/global";
 
 // Função para buscar as configurações globais
 export async function getGlobalData(): Promise<GlobalData> {
-  const apiUrl = process.env.STRAPI_API_URL || 'http://localhost:1337';
+   const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:1337";
 
   // A URL está correta, vamos mantê-la
   const url = `${apiUrl}/api/configuracao-geral?populate[menuPrincipal][populate]=*&populate[redesSociais][populate]=*&populate=logo`;
