@@ -1,9 +1,9 @@
-import { getGlobalData } from '@/lib/api'; // Vamos reutilizar nossa função da API!
+import { getGlobalData } from '@/lib/api';
 
 export default async function Footer() {
-  // 1. Buscamos os mesmos dados globais
   const globalData = await getGlobalData();
-  const { textoRodape, redesSociais, telefone, emailContato } = globalData;
+  // Se globalData falhar, redesSociais pode ser undefined, então damos um fallback
+  const { textoRodape, redesSociais = [], telefone, emailContato } = globalData;
 
   const currentYear = new Date().getFullYear();
 
@@ -21,10 +21,10 @@ export default async function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-400 hover:text-white transition-colors"
-                aria-label={rede.nome} // Bom para acessibilidade
+                aria-label={rede.label} // CORREÇÃO AQUI
               >
-                {/* Aqui poderíamos ter ícones, mas por enquanto vamos usar o nome */}
-                {rede.nome}
+                {/* Aqui poderíamos ter ícones, mas por enquanto vamos usar o label */}
+                {rede.label} {/* CORREÇÃO AQUI */}
               </a>
             ))}
           </div>
@@ -38,7 +38,6 @@ export default async function Footer() {
 
         {/* Texto do Rodapé */}
         <p className="text-gray-500 text-sm">
-          {/* Usamos o texto do Strapi, com um fallback */}
           {textoRodape || `© ${currentYear} Capela Santa Clara. Todos os direitos reservados.`}
         </p>
 
