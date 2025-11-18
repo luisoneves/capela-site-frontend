@@ -24,3 +24,9 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.fallback-text {
+  color: #6b7280; /* gray-500 */
+  font-style: italic;
+  opacity: 0.7;
+}

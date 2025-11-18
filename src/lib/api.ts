@@ -1,6 +1,6 @@
 import { GlobalData } from "@/types/global";
 
-// As interfaces refletem a estrutura real do Strapi v5 (sem 'attributes' no nível superior)
+// As interfaces refletem a estrutura real do Strapi v5
 export interface OficioLiturgico {
   id: number;
   nome: string;
@@ -13,48 +13,59 @@ export interface OficioLiturgico {
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:1337";
 
-// Função para buscar as configurações globais
+// ⚡ CLIENTE HTTP UNIFICADO com fallback automático
+async function fetchWithFallback<T>(
+  endpoint: string, 
+  fallback: T,
+  options?: RequestInit
+): Promise<T> {
+  try {
+    const res = await fetch(`${API_URL}${endpoint}`, {
+      cache: 'no-store',
+      ...options
+    });
+
+    if (!res.ok) {
+      console.warn(`🔧 ${endpoint} falhou (${res.status}) - usando fallback`);
+      return fallback;
+    }
+
+    const json = await res.json();
+    return json.data ?? fallback;
+  } catch (error) {
+    console.error(`🔧 Erro em ${endpoint} - usando fallback:`, error);
+    return fallback;
+  }
+}
+
+// 🎯 FUNÇÕES ESPECÍFICAS atualizadas
 export async function getGlobalData(): Promise<GlobalData> {
   const endpoint = `/api/configuracao-geral?populate[menuPrincipal]=*&populate[redesSociais]=*&populate=logo`;
-
-  try {
-    const res = await fetch(API_URL + endpoint, { cache: 'no-store' });
-    if (!res.ok) {
-      console.error(`API para Globals falhou com status: ${res.status}`);
-      // Lança o erro para que o Next.js possa tratá-lo (ex: mostrar uma página de erro)
-      throw new Error('Falha ao buscar dados globais.');
-    }
-
-    const json = await res.json();
-    if (!json.data) {
-      throw new Error("Dados globais não encontrados no Strapi. Verifique se o conteúdo está publicado.");
-    }
-    // A resposta é simplesmente o objeto dentro de 'data'
-    return json.data;
-  } catch (error) {
-    console.error("Erro detalhado em getGlobalData:", error);
-    // Em caso de erro, lançamos novamente para que a página quebre e nos avise do problema.
-    // O ideal, no futuro, é tratar isso com uma página de erro customizada.
-    throw error;
-  }
+  return fetchWithFallback<GlobalData>(endpoint, {} as GlobalData);
 }
 
-// Função para buscar os Ofícios Litúrgicos
 export async function getOficiosLiturgicos(): Promise<OficioLiturgico[]> {
   const endpoint = `/api/oficios-liturgicos?populate=imgoficios`;
-
-  try {
-    const res = await fetch(API_URL + endpoint, { cache: 'no-store' });
-    if (!res.ok) {
-       console.error(`API para Ofícios falhou com status: ${res.status}`);
-       throw new Error('Falha ao buscar ofícios.');
-    }
-
-    const json = await res.json();
-    // A resposta é o array que está dentro de 'data'
-    return json.data || []; // Retorna os dados ou um array vazio se não houver nada
-  } catch (error) {
-    console.error("Erro detalhado em getOficiosLiturgicos:", error);
-    throw error;
-  }
+  return fetchWithFallback<OficioLiturgico[]>(endpoint, []);
 }
+
+// 🎨 FUNÇÃO AUXILIAR MELHORADA para cores cinza
+export function isFallbackData(data: any): boolean {
+  if (!data) return true;
+  if (Array.isArray(data)) return data.length === 0;
+  return Object.keys(data).length === 0;
+}
+
+// 🆕 DADOS DE FALLBACK PADRÃO (opcional - para textos mais realistas)
+export const FALLBACK_DATA = {
+  site: {
+    nome: 'Capela Santa Clara',
+    telefone: '(11) 9999-9999',
+    email: 'contato@capela.com'
+  },
+  menu: [
+    { id: 1, label: 'Início', url: '/' },
+    { id: 2, label: 'Sobre', url: '/sobre' },
+    { id: 3, label: 'Contato', url: '/contato' }
+  ]
+} as const;

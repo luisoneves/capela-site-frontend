@@ -1,16 +1,22 @@
-import ListaServicos from "@/components/features/ListaServicos";
+import { CelebrationsSection } from '@/features/home/CelebrationsSection';
+import { ContactSection } from '@/features/home/ContactSection';
+import { Hero } from '@/features/home/Hero';
+import { PastoralsSection } from '@/features/home/PastoralsSection';
 
 export default function HomePage() {
   return (
-    // O container da página agora pode ser mais simples
-    <div className="container mx-auto p-8">
-      <h1 className="text-4xl font-bold mb-8 text-center text-gray-400">
-        Serviços da Capela
-      </h1>
+    <>
+      {/* Hero Section - Página inicial */}
+      <Hero />
 
-      <div className="flex justify-center">
-         <ListaServicos />
-      </div>
-    </div>
+      {/* Seção de Celebrações (Ofícios Litúrgicos) */}
+      <CelebrationsSection />
+
+      {/* Seção de Pastorais */}
+      <PastoralsSection />
+
+      {/* Seção de Contato */}
+      <ContactSection />
+    </>
   );
 }
