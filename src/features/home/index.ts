@@ -1,4 +1,4 @@
-export { default as Hero } from './Hero';
-export { default as PastoralsSection } from './PastoralsSection';
-export { default as CelebrationsSection } from './CelebrationsSection';
-export { default as ContactSection } from './ContactSection';
+export { Hero } from './Hero';
+export { PastoralsSection } from './PastoralsSection';
+export { CelebrationsSection } from './CelebrationsSection';
+export { ContactSection } from './ContactSection';
